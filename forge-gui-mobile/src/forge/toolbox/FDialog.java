@@ -57,6 +57,10 @@ public abstract class FDialog extends FOverlay {
     private final String title;
     private final int buttonCount;
     private float totalHeight;
+
+    public float getTotalHeight() {
+        return totalHeight;
+    }
     private float revealPercent = 0;
     private float lastDy = 0;
     private boolean finishedFirstReveal;

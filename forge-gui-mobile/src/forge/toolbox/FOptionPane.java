@@ -2,6 +2,7 @@ package forge.toolbox;
 
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import org.apache.commons.lang3.StringUtils;
 
 import com.badlogic.gdx.Input.Keys;
@@ -187,7 +188,11 @@ public class FOptionPane extends FDialog {
             }
         };
         container.add(inputField);
-        container.setHeight(inputField.getHeight() + padTop + PADDING);
+        container.setHeight(inputField.getHeight() + padTop + PADDING );
+
+        Gdx.input.setKeyboardHeightObserver(height -> {
+            System.out.println("Keyboard height changed: " + height);
+        });
 
         final FOptionPane optionPane = new FOptionPane(message, null, title, null, container, ImmutableList.of(Forge.getLocalizer().getMessage("lblOK"), Forge.getLocalizer().getMessage("lblCancel")), 0, new Callback<Integer>() {
             @SuppressWarnings("unchecked")
@@ -204,9 +209,18 @@ public class FOptionPane extends FDialog {
                 }
             }
         }) {
+//            @Override
+//            protected float getBottomMargin() {
+//                return Forge.getScreenHeight() * 0.6f; //account for keyboard
+//            }
             @Override
             protected float getBottomMargin() {
-                return Forge.getScreenHeight() * 0.4f; //account for keyboard
+//                return Forge.getScreenHeight() * 0.5f;
+                if (this.getTotalHeight() + PADDING > Forge.getScreenHeight() * 0.25f) {
+                    //if dialog is too tall, put it at the top of the screen
+                    return Forge.getScreenHeight() - this.getTotalHeight() - PADDING;
+                }
+                return Forge.getScreenHeight() * 0.75f;
             }
 
             @Override

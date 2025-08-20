@@ -1102,6 +1102,7 @@ public class Forge implements ApplicationListener {
     }
     public static void setOnScreenKeyboard(boolean val, boolean numeric) {
         Gdx.input.setOnscreenKeyboardVisible(val, numeric ? Input.OnscreenKeyboardType.NumberPad : Input.OnscreenKeyboardType.Default);
+        // set KeyboardHeightObserver
     }
 
     public static boolean endKeyInput() {
